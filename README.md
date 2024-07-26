@@ -257,8 +257,21 @@ Once that is completed, save all of the files and there should now be a working 
 
 ## Step Five: Setting Up CI/CD with GitHub
 
-To create this CI/CD, a new respository is going to be needed. Once that new repository is created and named, return to the IDE to push the local files/code to the repository.
+To create this CI/CD, a new respository is going to be needed. Once that new repository is created and named, return to the IDE to push the local files/code to the repository. To do this following the list of commands:
+```
+git init
+git add .
+git commit -m "Initial Commit"
+git branch -M main
+git remote add origin <repository URL>
+git push -u origin main
+```
+The files should now reside in the new repository that was just made.
 
+Next step will be to connect the repsository to the front end with AWS Amplify. Navigate to Amplify on your AWS console and select the quiz app. Select the action to host/deploy an app, it will then provide different options to host with. For this project, the GitHub option is what will be used. once selected, click `Connect branch`. It will prompt you to select the repository. The repository should be listed, but if not, select `View GitHub permissions` and give Amplify access to the necessary repository. Once done, select the right repository and ensure the branch is `main`. Most of the build settings should populate. Ensure the environment is `dev` and check the box next to `Enable full-stack continuous deployments (CI/CD)`. Next, a service role will need to be created to work properly. Select the option to create a role and specify Amplify as the service. For the permissions policies, add the `AdminsitratorAccess-Amplify` polciy to ensure no errors occur when deploying, then click next and create role.
 
+Once the role is created, get back to the Amplify console where the app is being built. After selecting the newly created service role, click next and review the information for any errors. If everything is right, select `save and deploy`. You should then be redirected to a page to watch the build process of the application.
+
+The purpose of this set up using AWS Amplify and Github is to create a pipeline that allows for the deployment of changes in the file to be automated. To test this, you can edit the quizData.js file (remove a question) residing in your GitHub repository and commit the changes. Once the commit has been pushed, you can check the Amplify consoleand notice that it has already begun the redploy to include the new changes. After finsihing, the changes should be present with a refresh.
 
 
